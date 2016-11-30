@@ -6,4 +6,3 @@ def index(request):
     context = {
         'latest_question_list': 'testMohit',
     }
-    return HttpResponse(template.render(context, request))
