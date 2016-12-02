@@ -3,7 +3,7 @@ from wit import Wit
 
 print(solrhandler.solrcall('Hello'))
 def converse(Query):
-	access_token = "7MI6KCEAOV24GWYB7TD7RALBDXMANCB3"
+	access_token = "7MI6KCEAOV24GWYB7TD7RALBDXMANCB3" 
 
 
 	def send(request, response):

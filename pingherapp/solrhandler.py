@@ -4,7 +4,7 @@ import json
 def solrcall(string):
 	
 	#Getting SOLR Hosted URL and docs
-	inurl = 'http://localhost:8983/solr/sampleshit/select?q=*:*&wt=json'
+	inurl = 'http://localhost:8983/solr/sampleshit/select?q=*:*&wt=json' 
 	data = urllib2.urlopen(inurl)
 	docs = json.load(data)['response']['docs']
 	

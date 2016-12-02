@@ -3,7 +3,7 @@ from django.template import loader
 import Converse
 
 def index(request):
-    template = loader.get_template('pingherapp/iq/index.html')
+    template = loader.get_template('pingherapp/iq/index.html') 
     context = {
         'latest_question_list': 'testMohit',
     }

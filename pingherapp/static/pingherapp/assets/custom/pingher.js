@@ -22,7 +22,7 @@
 			        }});
 			        
 			      };
-			 
+			  
 			      recognition.onerror = function(e) {
 			        recognition.stop();
 			      }
