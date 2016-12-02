@@ -13,9 +13,10 @@
 			                                 = e.results[0][0].transcript;
 			        recognition.stop();
 			        //document.getElementById('labnol').submit();
+			        data={question:"This is a sample question?"}
 			        $.ajax({
-			        	url: "Pingher/question", 
-			        	data: "Test Mohit",
+			        	url: "askQuestion", 
+			        	data: data,
 			        	success: function(result){
 			            console.log(result);
 			        }});
