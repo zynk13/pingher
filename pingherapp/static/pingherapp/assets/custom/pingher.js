@@ -25,6 +25,10 @@
 			        	data: data,
 			        	success: function(result){
 			            console.log(result);
+			            var d = new Date();
+			            var parentList=$("ul.chats");
+			            var answerUI="<li class='out'><img class='avatar' alt='' src='/static/pingherapp/assets/layouts/layout/img/avatar2.jpg' /><div class='message'><span class='arrow'> </span><a href='javascript:;' class='name'> Her </a><span class='datetime'> at "+d.getHours()+":"+d.getMinutes()+"</span><span class='body'>"+result+"</span></div></li>"
+			            parentList.append(answerUI);
 			        }});
 			        
 			      };

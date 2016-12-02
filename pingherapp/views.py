@@ -12,4 +12,4 @@ def index(request):
 def askQuestion(request):
     question=request.GET.get('question', '')
     temp1=witaihandler.converse(question)
-    return HttpResponse(temp1[0])
+    return HttpResponse(temp1)
