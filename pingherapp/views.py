@@ -10,6 +10,6 @@ def index(request):
     return HttpResponse(template.render(context, request))
     
 def askQuestion(request):
-    temp1=witaihandler.converse("Who won the 2016 elections")
-    
+    question=request.GET.get('question', '')
+    temp1=witaihandler.converse(question)
     return HttpResponse(temp1[0])
