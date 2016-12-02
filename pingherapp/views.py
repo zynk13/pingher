@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.template import loader
-import Converse
+import witaihandler
 
 def index(request):
     template = loader.get_template('pingherapp/iq/index.html') 
@@ -10,8 +10,6 @@ def index(request):
     return HttpResponse(template.render(context, request))
     
 def askQuestion(request):
-    temp1=Converse.converse("Who won the 2016 elections")
-    temp2=Converse.converse("who won the elections")
-    print temp1
-    print temp2
+    temp1=witaihandler.converse("Who won the 2016 elections")
+    
     return HttpResponse(temp1[0])

@@ -14,7 +14,8 @@ def converse(Query):
 
 	client = Wit(access_token=access_token, actions=actions)
 	data=client.converse(1,Query)
-	X=[]
+	X=""
 	for key in data['entities'].keys():
-	   	X.append(data['entities'][key][0]['value'])
-	return X
+	   	X=X+" "+(data['entities'][key][0]['value'])
+	tweet=solrhandler.solrcall(X)
+	return tweet
