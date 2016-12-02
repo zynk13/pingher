@@ -1,7 +1,7 @@
 import solrhandler
 from wit import Wit
 
-print(solrhandler.solrcall('Hello'))
+print(solrhandler.solrcall('Won Syria'))
 def converse(Query):
 	access_token = "7MI6KCEAOV24GWYB7TD7RALBDXMANCB3" 
 

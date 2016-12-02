@@ -9,5 +9,6 @@ def solrcall(string):
 	docs = json.load(data)['response']['docs']
 	print string
 	
-	tweet = str(docs[0]['tweet_text']) 
+	tweet = (docs[0]['tweet_text'])
+	 
 	return tweet
