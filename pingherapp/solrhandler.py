@@ -9,11 +9,13 @@ def solrcall(string):
 	if "tweets from" in string.lower():
 		screen_name=string.lower().replace("tweets from ","")
 		screen_name=screen_name.lower().replace(" ","")
-		print screen_name
-		inurl="http://54.212.247.174:8983/solr/pingher_nort/select?q=screen_name:"+urllib2.quote(screen_name)+"&wt=json"
+		inurl="http://54.212.247.174:8983/solr/pingher/select?q=screen_name:"+urllib2.quote(screen_name)+"&wt=json"
 		data = urllib2.urlopen(inurl)
 		docs = json.load(data)['response']['docs']
-		for i in range(5):
+		size=5
+		if len(docs)<5:
+			size=len(docs)
+		for i in range(size):
 			tweet+=(docs[i]['tweet_text'][0])
 			tweet+="\n"
 	else:

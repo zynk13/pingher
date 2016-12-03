@@ -36,4 +36,3 @@ def converse(Query):
 		tweet=solrhandler.solrcall(X)
 	
 	return tweet
-
