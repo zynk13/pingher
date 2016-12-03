@@ -5,7 +5,7 @@ def solrcall(string):
 	
 	#Getting SOLR Hosted URL and docs
 	screen_name=""
-	tweet=""
+	tweet_data={"tweet_text":"","tweet_url":[]}
 	if "tweets from" in string.lower():
 		screen_name=string.lower().replace("tweets from ","")
 		screen_name=screen_name.lower().replace(" ","")
@@ -16,11 +16,15 @@ def solrcall(string):
 		if len(docs)<5:
 			size=len(docs)
 		for i in range(size):
-			tweet+=(docs[i]['tweet_text'][0])
-			tweet+="\n"
+			tweet_data["tweet_text"]+=(docs[i]['tweet_text'][0])
+			tweet_data["tweet_text"]+="\n"
+		if size==0:
+			json_val=json.load(open("noname.json"))
+			tweet_data["tweet_text"]=json_val["NO_NAME"]
 	else:
-		inurl = "http://54.212.247.174:8983/solr/pingher_nort/select?q="+urllib2.quote(string)+"&wt=json"
+		inurl = "http://54.212.247.174:8983/solr/pingher/select?q="+urllib2.quote(string)+"&wt=json"
 		data = urllib2.urlopen(inurl)
 		docs = json.load(data)['response']['docs']
-		tweet = (docs[0]['tweet_text'][0])
-	return tweet
+		tweet_data["tweet_text"] = (docs[0]['tweet_text'][0])
+		tweet_data["tweet_url"] = (docs[0]['url'])
+	return tweet_data
