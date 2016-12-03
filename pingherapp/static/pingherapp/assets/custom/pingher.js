@@ -20,8 +20,8 @@ $(window).load(function() {
   PingherUtil={
 		  startDictation : function(){
 			  if (window.hasOwnProperty('webkitSpeechRecognition')) {
-			      var snd = new Audio("/static/pingherapp/assets/sounds/ahhh.wav");
-			      //var snd = new Audio("/static/pingherapp/assets/sounds/beep.wav");   
+			      //var snd = new Audio("/static/pingherapp/assets/sounds/ahhh.wav");
+			      var snd = new Audio("/static/pingherapp/assets/sounds/beep.wav");   
 			      snd.play(); 
 			      var recognition = new webkitSpeechRecognition();
 			      recognition.continuous = false;

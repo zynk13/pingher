@@ -1,7 +1,9 @@
 import solrhandler
 from wit import Wit
 import json
+import os.path
 
+BASE = os.path.dirname(os.path.abspath(__file__))
 def converse(Query):
 	access_token = "HUYFSZATE2FRGLETGVWWTCHNSVTXBKDC" 
 
@@ -19,7 +21,7 @@ def converse(Query):
 	tweet=""
 	for key in data['entities'].keys():
 	   	X=X+" "+(data['entities'][key][0]['value'])
-	mydict=json.load(open("mydict.json"))
+	mydict=json.load(open(os.path.join(BASE, "mydict.json")))
 	solr=True
 	for key_list in mydict.keys():
 		flag=True
