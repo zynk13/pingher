@@ -18,7 +18,6 @@ def converse(Query):
 	#Query=""
 	data=client.converse(1,Query)
 	X=""
-	tweet=""
 	for key in data['entities'].keys():
 	   	X=X+" "+(data['entities'][key][0]['value'])
 	mydict=json.load(open(os.path.join(BASE, "mydict.json")))

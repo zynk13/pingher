@@ -1,5 +1,6 @@
 import urllib2
 import json
+import os.path
 
 def solrcall(string):
 	
@@ -19,7 +20,7 @@ def solrcall(string):
 			tweet_data["tweet_text"]+=(docs[i]['tweet_text'][0])
 			tweet_data["tweet_text"]+="\n"
 		if size==0:
-			json_val=json.load(open("noname.json"))
+			json_val=json.load(open(os.path.join(BASE, "noname.json")))
 			tweet_data["tweet_text"]=json_val["NO_NAME"]
 	else:
 		inurl = "http://54.212.247.174:8983/solr/pingher/select?q="+urllib2.quote(string)+"&wt=json"
@@ -27,4 +28,5 @@ def solrcall(string):
 		docs = json.load(data)['response']['docs']
 		tweet_data["tweet_text"] = (docs[0]['tweet_text'][0])
 		tweet_data["tweet_url"] = (docs[0]['url'])
+	print tweet_data
 	return tweet_data
