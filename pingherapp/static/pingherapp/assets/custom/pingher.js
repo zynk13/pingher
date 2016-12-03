@@ -14,6 +14,7 @@ $(window).load(function() {
         utterance.voice = voices.filter(function(voice) { return voice.name == 'Google UK English Female'; })[0];
     };
     window.speechSynthesis.speak(utterance);
+    PingherUtil.DetectEnter();
 });
 
 
@@ -35,33 +36,10 @@ $(window).load(function() {
          //                     }
 			      recognition.onresult = function(e) {
     			      
-			      document.getElementById('transcript').value
-			                                 = e.results[0][0].transcript;
-			     recognition.stop();
-			      var d = new Date();
-			      var question=$("input[name='q']").val();
-			      var questionUI="<li class='in'><img class='avatar' alt='' src='/static/pingherapp/assets/layouts/layout/img/avatar1.jpg' /><div class='message'><span class='arrow'> </span><a href='javascript:;' class='name'> You </a><span class='datetime'> at "+d.getHours()+":"+d.getMinutes()+" </span><span class='body'>"+question+"</span></div></li>"
-    			      var parentList=$("ul.chats");
-    			      parentList.append(questionUI);
-			        //document.getElementById('labnol').submit();
-			        data={question:question}
-			        $.ajax({
-			        	url: "askQuestion", 
-			        	data: data,
-			        	success: function(result){
-			            console.log(result);
-			            var d = new Date();
-			            var parentList=$("ul.chats");
-			            var answerUI="<li class='out'><img class='avatar' alt='' src='/static/pingherapp/assets/layouts/layout/img/avatar2.jpg' /><div class='message'><span class='arrow'> </span><a href='javascript:;' class='name'> Her </a><span class='datetime'> at "+d.getHours()+":"+d.getMinutes()+"</span><span class='body'>"+result+"</span></div></li>"
-			            parentList.append(answerUI);
-			            if ('speechSynthesis' in window) {
-			                utterance.text = result;
-                                        window.speechSynthesis.speak(utterance);
-			            }
-			            
-			   
-                                
-			        }});
+                    		      document.getElementById('transcript').value= e.results[0][0].transcript;
+                    		      recognition.stop();
+                    		      PingherUtil.MakeAjaxCall();
+                    		     
 			        
 			      };
 			  
@@ -70,5 +48,35 @@ $(window).load(function() {
 			      }
 			 
 			    }   
-			}
+			},
+		DetectEnter : function(){
+          		        $("input[name='q']").bind("keypress", function(e) {
+                                if (e.keyCode == 13) {
+                                    PingherUtil.MakeAjaxCall();
+                                }
+                                });
+	      },
+              MakeAjaxCall : function(){
+                                    var d = new Date();
+                    		      var question=$("input[name='q']").val();
+                    		      var questionUI="<li class='in'><img class='avatar' alt='' src='/static/pingherapp/assets/layouts/layout/img/avatar1.jpg' /><div class='message'><span class='arrow'> </span><a href='javascript:;' class='name'> You </a><span class='datetime'> at "+d.getHours()+":"+d.getMinutes()+" </span><span class='body'>"+question+"</span></div></li>"
+                       			      var parentList=$("ul.chats");
+                       			      parentList.append(questionUI);
+                                        data={question:question}
+                                        $.ajax({
+                                			        	url: "askQuestion", 
+                                			        	data: data,
+                                			        	success: function(result){
+                                            console.log(result);
+                                            var d = new Date();
+                                            var parentList=$("ul.chats");
+                                            var answerUI="<li class='out'><img class='avatar' alt='' src='/static/pingherapp/assets/layouts/layout/img/avatar2.jpg' /><div class='message'><span class='arrow'> </span><a href='javascript:;' class='name'> Her </a><span class='datetime'> at "+d.getHours()+":"+d.getMinutes()+"</span><span class='body'>"+result+"</span></div></li>"
+                                            parentList.append(answerUI);
+                                            if ('speechSynthesis' in window) {
+                                                utterance.text = result;
+                                                                        window.speechSynthesis.speak(utterance);
+                                            }
+                                        
+                                        }});    
+            } 
 	}
