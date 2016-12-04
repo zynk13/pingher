@@ -35,5 +35,5 @@ def converse(Query):
 		tweet=solrhandler.solrcall(X,data)
 	
 	return tweet
-
+converse("read me positive tweets from dna about demonetization?")
 

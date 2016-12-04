@@ -13,6 +13,8 @@ def process_tweets_from(string,data):
 	if "tweets from" in string.lower() and "sentiment" in data['entities']:
 		#screen_name=string.lower().replace("tweets from ","")
 		screen_name=data['entities']['tweets_from'][0]['value'].lower().replace("tweets from ","")
+		if "question_type" in data['entities'].keys():
+			string=string.replace(data['entities']['question_type'][0]['value'].lower(),"")
 		if "desc_q" in data['entities'].keys():
 			string=string.replace(data['entities']['desc_q'][0]['value'].lower(),"")
 		string=string.replace("tweets from ","")
@@ -77,6 +79,8 @@ def process_tweets_from(string,data):
 		screen_name=screen_name.lower().replace(" ","")
 		string=string.replace("tweets from ","")
 		string=string.replace(screen_name,"")
+		if "question_type" in data['entities'].keys():
+			string=string.replace(data['entities']['question_type'][0]['value'].lower(),"")
 		if "desc_q" in data['entities'].keys():
 			string=string.replace(data['entities']['desc_q'][0]['value'].lower(),"")
 		inurl="http://54.212.247.174:8983/solr/pingher/select?q="+urllib2.quote(string)+"%20screen_name:"+urllib2.quote(screen_name)+"&wt=json"
@@ -150,4 +154,8 @@ def process_show(string,data):
 			tweet_data["tweet_text"]+=(docs[max_ind[i]]['tweet_text'][0])
 			tweet_data["tweet_text"]+="\n"
 			tweet_data["tweet_url"].append(docs[max_ind[i]]['url'])
+		if size==0:
+			json_val=json.load(open(os.path.join(BASE, "noname.json")))
+			tweet_data["tweet_text"]=json_val["NO_NAME"]
+		
 		return tweet_data
