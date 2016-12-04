@@ -32,7 +32,7 @@ def converse(Query):
 			solr=False
 
 	if solr:
-		tweet=solrhandler.solrcall(X)
+		tweet=solrhandler.solrcall(X,data)
 	
 	return tweet
 
