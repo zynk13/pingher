@@ -6,3 +6,7 @@
 *.pyc
 
 *.pyc
+
+pingherapp/views.pyc
+
+*.pyc
