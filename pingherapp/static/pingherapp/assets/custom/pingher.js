@@ -5,12 +5,12 @@ $(window).load(function() {
     utterance.volume = 1.0;
     utterance.rate = 1.0;
     utterance.pitch = 1.0;
-    
+    voices=null;
         //Speak the phrase
     window.speechSynthesis.speak(utterance);
     window.speechSynthesis.onvoiceschanged = function () {
         console.log("voice changed")
-        var voices = speechSynthesis.getVoices();
+        voices = speechSynthesis.getVoices();
         utterance.voice = voices.filter(function(voice) { return voice.name == 'Google UK English Female'; })[0];
     };
     window.speechSynthesis.speak(utterance);
@@ -77,7 +77,10 @@ $(window).load(function() {
                                                 var urltemp="<a href='"+result.tweet_url[i]+"' target='_blank'>"+result.tweet_url[i]+"</a>&nbsp;"
                                                 urlUI+=urltemp;
                                             }
-                                            var answerUI="<li class='out'><img class='avatar' alt='' src='/static/pingherapp/assets/layouts/layout/img/avatar2.png' /><div class='message'><span class='arrow'> </span><a href='javascript:;' class='name'> Her </a><span class='datetime'> at "+d.getHours()+":"+d.getMinutes()+"</span><span class='body'>"+result.tweet_text +"URL(s) - "+urlUI+"</span></div></li>"
+                                            if(urlUI!=""){
+                                                urlUI="&nbsp;URL(s) - "+urlUI
+                                            }
+                                            var answerUI="<li class='out'><img class='avatar' alt='' src='/static/pingherapp/assets/layouts/layout/img/avatar2.png' /><div class='message'><span class='arrow'> </span><a href='javascript:;' class='name'> Her </a><span class='datetime'> at "+d.getHours()+":"+d.getMinutes()+"</span><span class='body'>"+result.tweet_text+urlUI+"</span></div></li>"
                                             parentList.append(answerUI);
                                             var container = $(".scroller");
                                             container.slimScroll({
@@ -85,6 +88,12 @@ $(window).load(function() {
                                             
                                             });
                                             if ('speechSynthesis' in window) {
+                                                    utterance = new window.SpeechSynthesisUtterance();
+                                                    utterance.lang = 'en-US';
+                                                    utterance.volume = 1.0;
+                                                    utterance.rate = 1.0;
+                                                    utterance.pitch = 1.0;
+                                                    utterance.voice = voices.filter(function(voice) { return voice.name == 'Google UK English Female'; })[0];
                                                         utterance.text = result.tweet_text;
                                                         window.speechSynthesis.speak(utterance);
                                             }
