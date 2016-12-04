@@ -2,6 +2,7 @@ import solrhandler
 from wit import Wit
 import json
 import os.path
+from random import randint
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 def converse(Query):
@@ -26,17 +27,21 @@ def converse(Query):
 	for key_list in mydict.keys():
 		flag=True
 		for key in data['entities'].keys():
-			print data['entities'][key][0]['value'],key_list
 			if str(data['entities'][key][0]['value']).upper() not in str(key_list):
 				flag=False
 		if flag:
-			print data['entities'][key][0]['value'],key_list
-			tweet['tweet_text']=mydict[key_list]
+			if "JOKE" in key_list:
+				x=randint(1,5)
+				tweet['tweet_text']=mydict[key_list[:-1]+str(x)]
+			else:
+				tweet['tweet_text']=mydict[key_list]
 			solr=False
 	if len(data['entities'].keys())==0:
 		solr=True
 		X=Query
 	if solr:
 		tweet=solrhandler.solrcall(X,data)
+	print tweet
 	return tweet
 
+converse("Tell me a joke")
