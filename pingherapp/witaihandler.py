@@ -31,7 +31,9 @@ def converse(Query):
 		if flag:
 			tweet['tweet_text']=mydict[key_list]
 			solr=False
-
+	if len(data['entities'].keys())==0:
+		solr=True
+		X=Query
 	if solr:
 		tweet=solrhandler.solrcall(X,data)
 	return tweet
