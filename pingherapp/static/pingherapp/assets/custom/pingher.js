@@ -60,9 +60,10 @@ $(window).load(function() {
                                     var d = new Date();
                     		      var question=$("input[name='q']").val();
                     		      var questionUI="<li class='in'><img class='avatar' alt='' src='/static/pingherapp/assets/layouts/layout/img/avatar1.jpg' /><div class='message'><span class='arrow'> </span><a href='javascript:;' class='name'> You </a><span class='datetime'> at "+d.getHours()+":"+d.getMinutes()+" </span><span class='body'>"+question+"</span></div></li>"
-                       			      var parentList=$("ul.chats");
-                       			      parentList.append(questionUI);
-                                        data={question:question}
+                       		      var parentList=$("ul.chats");
+                       		      parentList.append(questionUI);
+                                      data={question:question}
+                                        $("input[name='q']")[0].value="";
                                         $.ajax({
                                 			        	url: "askQuestion", 
                                 			        	data: data,
@@ -70,11 +71,18 @@ $(window).load(function() {
                                             console.log(result);
                                             var d = new Date();
                                             var parentList=$("ul.chats");
-                                            var answerUI="<li class='out'><img class='avatar' alt='' src='/static/pingherapp/assets/layouts/layout/img/avatar2.jpg' /><div class='message'><span class='arrow'> </span><a href='javascript:;' class='name'> Her </a><span class='datetime'> at "+d.getHours()+":"+d.getMinutes()+"</span><span class='body'>"+result.tweet_text+"</span></div></li>"
+                                            var urlUI="";
+                                            for(var i=0;i<result.tweet_url.size;i++){
+                                                console.log(result.tweet_url[i]);
+                                                var urltemp="<a href='"+result.tweet_url[i]+"' target='_blank'>"+result.tweet_url[i]+"</a>&nbsp;"
+                                                urlUI+=urltemp;
+                                            }
+                                            var answerUI="<li class='out'><img class='avatar' alt='' src='/static/pingherapp/assets/layouts/layout/img/avatar2.png' /><div class='message'><span class='arrow'> </span><a href='javascript:;' class='name'> Her </a><span class='datetime'> at "+d.getHours()+":"+d.getMinutes()+"</span><span class='body'>"+result.tweet_text +"URL(s) - "+urlUI+"</span></div></li>"
                                             parentList.append(answerUI);
                                             var container = $(".scroller");
                                             container.slimScroll({
                                             scrollTo: container[0].scrollHeight
+                                            
                                             });
                                             if ('speechSynthesis' in window) {
                                                         utterance.text = result.tweet_text;
