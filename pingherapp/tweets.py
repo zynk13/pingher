@@ -4,11 +4,12 @@ import os.path
 
 
 screen_name=""
-tweet_data={"tweet_text":"","tweet_url":[]}
+#tweet_data={"tweet_text":"","tweet_url":[]}
 	
 
 def process_tweets_from(string,data):
 	## Read out positive tweets from dna about demonetization
+	tweet_data={"tweet_text":"","tweet_url":[]}
 
 	if "tweets from" in string.lower() and "sentiment" in data['entities']:
 		#screen_name=string.lower().replace("tweets from ","")
@@ -103,6 +104,7 @@ def process_tweets_from(string,data):
 def process_show(string,data):
 	## Show me possitive tweets on demonetization
 	#flag="neutral"
+	tweet_data={"tweet_text":"","tweet_url":[]}
 	flag="neutral"
 	if "show" in string.lower():
 		string=string.lower().replace("show","")
