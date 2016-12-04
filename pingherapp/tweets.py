@@ -102,19 +102,30 @@ def process_tweets_from(string,data):
 
 def process_show(string,data):
 	## Show me possitive tweets on demonetization
-	print string
+	#flag="neutral"
+	flag="neutral"
 	if "show" in string.lower():
 		string=string.lower().replace("show","")
-		flag=0
-		if "positive" in string:
-			flag=1
-			string=string.replace("positive","")
-		elif "negative" in string:
-			flag=-1
-			string=string.replace("negative","")
-		elif "neutral" in string:
-			flag=0
-			string=string.replace("neutral","")
+		if "sentiment" in data['entities'].keys():
+			if "positive" in string:
+				flag="positive"
+				string=string.replace("positive","")
+			elif "negative" in string:
+				flag="negative"
+				string=string.replace("negative","")
+			elif "neutral" in string:
+				flag="neutral"
+				string=string.replace("neutral","")
+		if "superlative" in data['entities'].keys():
+			string=string.replace(data['entities']['superlative'][0]['value'].lower(),"")
+		
+		if "query_subject" in data['entities'].keys():
+			string=string.replace(data['entities']['query_subject'][0]['value'].lower(),"")
+			if "favourite" in data['entities']['query_subject'][0]['value'].lower():
+				flag="favorite"
+			if "retweet" in data['entities']['query_subject'][0]['value'].lower():
+				flag="retweet"
+	
 		inurl = "http://54.212.247.174:8983/solr/pingher/select?q="+urllib2.quote(string)+"&rows=100&wt=json"
 		data = urllib2.urlopen(inurl)
 		docs = json.load(data)['response']['docs']
@@ -123,27 +134,45 @@ def process_show(string,data):
 		neg_score=-0.3;
 		screen_name_list=[]
 		tweet_list=[]
-		if flag==1:
+		max_count=0.0
+		max_index=0
+		if flag=="positive":
 			for i in range(len(docs)):
 				if docs[i]['sentiment'][0]>pos_score and docs[i]['screen_name'] not in screen_name_list and docs[i]['tweet_text'][0] not in tweet_list:
 					#score=docs[i]['sentiment']
 					max_ind.append(i)
 					screen_name_list.append(docs[i]['screen_name'][0])
 					tweet_list.append(docs[i]['tweet_text'][0])
-		elif flag==-1:
+		elif flag=="negative":
 			for i in range(len(docs)):
 				if docs[i]['sentiment'][0]<neg_score and docs[i]['screen_name'] not in screen_name_list  and docs[i]['tweet_text'][0] not in tweet_list:
 					#score=docs[i]['sentiment']
 					max_ind.append(i)
 					screen_name_list.append(docs[i]['screen_name'][0])
 					tweet_list.append(docs[i]['tweet_text'][0])
-		elif flag==0:
+		elif flag=="neutral":
 			for i in range(len(docs)):
 				if docs[i]['sentiment'][0]==0 and docs[i]['screen_name'] not in screen_name_list  and docs[i]['tweet_text'][0] not in tweet_list:
 					#score=docs[i]['sentiment']
 					max_ind.append(i)
 					screen_name_list.append(docs[i]['screen_name'][0])
 					tweet_list.append(docs[i]['tweet_text'][0])
+		elif flag=="favorite":
+			for i in range(len(docs)):
+				if 'favorite_count' in docs[i].keys():
+					if docs[i]['favorite_count'][0]>max_count:
+						max_index=i
+						max_count=docs[i]['favorite_count'][0]
+			max_ind.append(max_index)
+		elif flag=="retweet":
+			for i in range(len(docs)):
+				if 'retweet_count' in docs[i].keys():
+					if docs[i]['retweet_count'][0]>max_count:
+						max_index=i
+						max_count=docs[i]['retweet_count'][0]
+			max_ind.append(max_index)
+		
+			
 		
 
 		#max_ind=sorted(max_ind)
