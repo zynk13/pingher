@@ -13,7 +13,8 @@ def converse(Query):
 	actions = {
 	    'send': send,    
 	}
-
+	tweet={"tweet_text":"","tweet_url":[]}
+	
 	client = Wit(access_token=access_token, actions=actions)
 	#Query=""
 	data=client.converse(1,Query)
@@ -28,11 +29,11 @@ def converse(Query):
 			if str(data['entities'][key][0]['value']).upper() not in str(key_list):
 				flag=False
 		if flag:
-			tweet=mydict[key_list]
+			tweet['tweet_text']=mydict[key_list]
 			solr=False
 
 	if solr:
 		tweet=solrhandler.solrcall(X,data)
-	
+	print tweet
 	return tweet
 
