@@ -9,7 +9,7 @@ def solrcall(string,data):
 	screen_name=""
 	tweet_data={"tweet_text":"","tweet_url":[]}
 	string=string.lower()
-
+	print string
 	if "tweets from" in string:
 		tweet_data=tweets.process_tweets_from(string,data)
 	elif "show" in string:
