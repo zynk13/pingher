@@ -42,22 +42,22 @@ def process_tweets_from(string,data):
 		tweet_list=[]
 		if flag==1:
 			for i in range(len(docs)):
-				if docs[i]['sentiment'][0]>pos_score and docs[i]['tweet_text'][0] not in tweet_list:
+				if docs[i]['sentiment']>pos_score and docs[i]['tweet_text'] not in tweet_list:
 					#score=docs[i]['sentiment']
 					max_ind.append(i)
-					tweet_list.append(docs[i]['tweet_text'][0])
+					tweet_list.append(docs[i]['tweet_text'])
 		elif flag==-1:
 			for i in range(len(docs)):
-				if docs[i]['sentiment'][0]<neg_score and docs[i]['tweet_text'][0] not in tweet_list:
+				if docs[i]['sentiment']<neg_score and docs[i]['tweet_text'] not in tweet_list:
 					#score=docs[i]['sentiment']
 					max_ind.append(i)
-					tweet_list.append(docs[i]['tweet_text'][0])
+					tweet_list.append(docs[i]['tweet_text'])
 		elif flag==0:
 			for i in range(len(docs)):
-				if docs[i]['sentiment'][0]==0.0 and docs[i]['tweet_text'][0] not in tweet_list:
+				if docs[i]['sentiment']==0.0 and docs[i]['tweet_text'] not in tweet_list:
 					#score=docs[i]['sentiment']
 					max_ind.append(i)
-					tweet_list.append(docs[i]['tweet_text'][0])
+					tweet_list.append(docs[i]['tweet_text'])
 
 			print max_ind
 		
@@ -65,9 +65,10 @@ def process_tweets_from(string,data):
 		if len(max_ind)<5:
 			size=len(max_ind)
 		for i in range(size):
-			tweet_data["tweet_text"]+=(docs[max_ind[i]]['tweet_text'][0])
+			tweet_data["tweet_text"]+=(docs[max_ind[i]]['tweet_text'])
 			tweet_data["tweet_text"]+="\n"
-			tweet_data["tweet_url"].append(docs[max_ind[i]]['url'])
+			if "url" in docs[max_ind[i]].keys():
+				tweet_data["tweet_url"].append(docs[max_ind[i]]['url'])
 		if size==0:
 			json_val=json.load(open(os.path.join(BASE, "noname.json")))
 			tweet_data["tweet_text"]=json_val["NO_NAME"]
@@ -91,7 +92,7 @@ def process_tweets_from(string,data):
 		if len(docs)<5:
 			size=len(docs)
 		for i in range(size):
-			tweet_data["tweet_text"]+=(docs[i]['tweet_text'][0])
+			tweet_data["tweet_text"]+=(docs[i]['tweet_text'])
 			tweet_data["tweet_text"]+="\n"
 		if size==0:
 			json_val=json.load(open(os.path.join(BASE, "noname.json")))
@@ -140,38 +141,38 @@ def process_show(string,data):
 		max_index=0
 		if flag=="positive":
 			for i in range(len(docs)):
-				if docs[i]['sentiment'][0]>pos_score and docs[i]['screen_name'] not in screen_name_list and docs[i]['tweet_text'][0] not in tweet_list:
+				if docs[i]['sentiment']>pos_score and docs[i]['screen_name'] not in screen_name_list and docs[i]['tweet_text'] not in tweet_list:
 					#score=docs[i]['sentiment']
 					max_ind.append(i)
 					screen_name_list.append(docs[i]['screen_name'][0])
-					tweet_list.append(docs[i]['tweet_text'][0])
+					tweet_list.append(docs[i]['tweet_text'])
 		elif flag=="negative":
 			for i in range(len(docs)):
-				if docs[i]['sentiment'][0]<neg_score and docs[i]['screen_name'] not in screen_name_list  and docs[i]['tweet_text'][0] not in tweet_list:
+				if docs[i]['sentiment']<neg_score and docs[i]['screen_name'] not in screen_name_list  and docs[i]['tweet_text'] not in tweet_list:
 					#score=docs[i]['sentiment']
 					max_ind.append(i)
 					screen_name_list.append(docs[i]['screen_name'][0])
-					tweet_list.append(docs[i]['tweet_text'][0])
+					tweet_list.append(docs[i]['tweet_text'])
 		elif flag=="neutral":
 			for i in range(len(docs)):
-				if docs[i]['sentiment'][0]==0 and docs[i]['screen_name'] not in screen_name_list  and docs[i]['tweet_text'][0] not in tweet_list:
+				if docs[i]['sentiment']==0 and docs[i]['screen_name'] not in screen_name_list  and docs[i]['tweet_text'] not in tweet_list:
 					#score=docs[i]['sentiment']
 					max_ind.append(i)
 					screen_name_list.append(docs[i]['screen_name'][0])
-					tweet_list.append(docs[i]['tweet_text'][0])
+					tweet_list.append(docs[i]['tweet_text'])
 		elif flag=="favorite":
 			for i in range(len(docs)):
 				if 'favorite_count' in docs[i].keys():
-					if docs[i]['favorite_count'][0]>max_count:
+					if docs[i]['favorite_count']>max_count:
 						max_index=i
-						max_count=docs[i]['favorite_count'][0]
+						max_count=docs[i]['favorite_count']
 			max_ind.append(max_index)
 		elif flag=="retweet":
 			for i in range(len(docs)):
 				if 'retweet_count' in docs[i].keys():
-					if docs[i]['retweet_count'][0]>max_count:
+					if docs[i]['retweet_count']>max_count:
 						max_index=i
-						max_count=docs[i]['retweet_count'][0]
+						max_count=docs[i]['retweet_count']
 			max_ind.append(max_index)
 		
 			
@@ -182,9 +183,10 @@ def process_show(string,data):
 		if len(max_ind)<5:
 			size=len(max_ind)
 		for i in range(size):
-			tweet_data["tweet_text"]+=(docs[max_ind[i]]['tweet_text'][0])
+			tweet_data["tweet_text"]+=(docs[max_ind[i]]['tweet_text'])
 			tweet_data["tweet_text"]+="\n"
-			tweet_data["tweet_url"].append(docs[max_ind[i]]['url'])
+			if "url" in docs[max_ind[i]].keys():
+				tweet_data["tweet_url"].append(docs[max_ind[i]]['url'])
 		if size==0:
 			json_val=json.load(open(os.path.join(BASE, "noname.json")))
 			tweet_data["tweet_text"]=json_val["NO_NAME"]

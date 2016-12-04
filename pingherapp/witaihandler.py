@@ -43,5 +43,3 @@ def converse(Query):
 		tweet=solrhandler.solrcall(X,data)
 	print tweet
 	return tweet
-
-converse("Tell me a joke")

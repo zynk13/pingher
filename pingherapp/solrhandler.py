@@ -19,7 +19,7 @@ def solrcall(string,data):
 		inurl = "http://54.212.247.174:8983/solr/pingher/select?q="+urllib2.quote(string)+"&wt=json"
 		data = urllib2.urlopen(inurl)
 		docs = json.load(data)['response']['docs']
-		tweet_data["tweet_text"] = (docs[0]['tweet_text'][0])
+		tweet_data["tweet_text"] = (docs[0]['tweet_text'])
 		tweet_data["tweet_url"] = (docs[0]['url'])
 	print tweet_data
 	return tweet_data
