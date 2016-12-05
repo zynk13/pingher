@@ -10,16 +10,36 @@ def solrcall(string,data):
 	tweet_data={"tweet_text":"","tweet_url":[]}
 	string=string.lower()
 	#print string
-	if "show" in string:
+	if "stat" in data['entities']:
+		if "demonetization" in data['entities']:
+			string=data['entities']['demonetization'][0]["value"];
+			inurl = "http://54.212.247.174:8983/solr/pingher/select?q="+urllib2.quote(data['entities']['demonetization'][0]["value"])+"&wt=json&rows=1000"
+		elif "target_person" in data['entities']:
+			string=data['entities']['target_person'][0]["value"];
+			inurl = "http://54.212.247.174:8983/solr/pingher/select?q="+urllib2.quote(data['entities']['target_person'][0]["value"])+"&wt=json&rows=1000"
+		
+		data = urllib2.urlopen(inurl)
+		docs = json.load(data)['response']['docs']
+		pos=0.0
+		neg=0.0
+		neu=0.0
+		for i in range(len(docs)):
+			if docs[i]['sentiment']>0.0:
+				pos+=1
+			elif docs[i]['sentiment']<0.0:
+				neg+=1
+			elif docs[i]['sentiment']==0.0:
+				neu+=1
+		tweet_data["tweet_text"]=str(pos*100/len(docs))+" percentage of general public are happy,"+str(neg*100/len(docs))+" percentage of general public are sad and "+str(neu*100/len(docs))+" percentage of general public are neutral about "+string
+
+
+	elif "show" in string:
 		tweet_data=tweets.process_tweets_from(string,data)
-			
+
 	else:
 		inurl = "http://54.212.247.174:8983/solr/pingher/select?q="+urllib2.quote(string)+"&wt=json&rows=100"
 		data = urllib2.urlopen(inurl)
 		docs = json.load(data)['response']['docs']
-		#tweet_data["tweet_text"] = (docs[0]['tweet_text'])
-		#if "url" in docs[0].keys():
-		#	tweet_data["tweet_url"] = (docs[0]['url'])
 		size=5
 		for i in range(size):
 			tweet_data["tweet_text"]+=(docs[i]['tweet_text'])
