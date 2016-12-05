@@ -44,7 +44,7 @@ def solrcall(string,data):
 		docs = json.load(data)['response']['docs']
 		size=5
 		if "media_url" in docs[i]:
-			size=5
+			size=3
 		for i in range(size):
 			tweet_data["tweet_text"]+=(docs[i]['tweet_text'])
 			tweet_data["tweet_text"]+="\n"
