@@ -49,4 +49,3 @@ def converse(Query):
 	print tweet
 	return tweet
 
-converse("Show me image of Kejriwal")
