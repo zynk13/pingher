@@ -49,16 +49,17 @@ def process_tweets_from(string,data):
 	if x=="" and screen_name=="":
 		inurl="http://54.212.247.174:8983/solr/pingher/select?q=*:*&wt=json"
 	elif x=="" and screen_name!="":
-		inurl="http://54.212.247.174:8983/solr/pingher/select?q=screen_name:"+urllib2.quote(screen_name)+"&wt=json"
+		inurl="http://54.212.247.174:8983/solr/pingher/select?q=screen_name:"+urllib2.quote(screen_name)+"&wt=json&rows=100"
 	elif x!="" and screen_name=="":
-		inurl="http://54.212.247.174:8983/solr/pingher/select?q="+urllib2.quote(string)+"&wt=json"
+		inurl="http://54.212.247.174:8983/solr/pingher/select?q="+urllib2.quote(string)+"&wt=json&rows=100"
 	elif x!="" and screen_name!="":
-		inurl="http://54.212.247.174:8983/solr/pingher/select?q=("+urllib2.quote(string)+")AND(screen_name:"+urllib2.quote(screen_name)+")&wt=json"
+		inurl="http://54.212.247.174:8983/solr/pingher/select?q=("+urllib2.quote(string)+")AND(screen_name:"+urllib2.quote(screen_name)+")&wt=json&rows=100"
 	data = urllib2.urlopen(inurl)
+	print inurl
 	docs = json.load(data)['response']['docs']
 	max_ind=[];
-	pos_score=0.0;
-	neg_score=-0.0;
+	pos_score=0.5;
+	neg_score=-0.5;
 	screen_name_list=[]
 	tweet_list=[]
 	max_count=0.0
@@ -80,7 +81,7 @@ def process_tweets_from(string,data):
 				tweet_list.append(docs[i]['tweet_text'])
 	elif flag=="neutral":
 		for i in range(len(docs)):
-			if docs[i]['sentiment']==0 and docs[i]['screen_name'] not in screen_name_list  and docs[i]['tweet_text'] not in tweet_list:
+			if docs[i]['sentiment']==0.0 and docs[i]['screen_name'] not in screen_name_list  and docs[i]['tweet_text'] not in tweet_list:
 				#score=docs[i]['sentiment']
 				max_ind.append(i)
 				screen_name_list.append(docs[i]['screen_name'][0])
@@ -102,7 +103,13 @@ def process_tweets_from(string,data):
 	elif flag=="image":
 		max_ind.append(0)
 
-	
+	max_list={}
+	#for i in range(len(max_ind)):
+	#	if(flag=="positive"):
+	#		max_list[docs[i]['sentiment']]=i
+	#		print docs[i]['sentiment']
+	#print max_list
+	#print max_ind
 	size=5
 	if len(max_ind)<5:
 		size=len(max_ind)
