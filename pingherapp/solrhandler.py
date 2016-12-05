@@ -7,7 +7,7 @@ def solrcall(string,data):
 	
 	#Getting SOLR Hosted URL and docs
 	screen_name=""
-	tweet_data={"tweet_text":"","tweet_url":[],"media_url":""}
+	tweet_data={"tweet_text":"","tweet_url":[],"media_url":[]}
 	string=string.lower()
 	#print string
 	if "stat" in data['entities']:
@@ -49,7 +49,7 @@ def solrcall(string,data):
 			tweet_data["tweet_text"]+=(docs[i]['tweet_text'])
 			tweet_data["tweet_text"]+="\n"
 			if "media_url" in docs[i]:
-				tweet_data["media_url"]=str(docs[i]['media_url'][0])
+				tweet_data["media_url"].append(str(docs[i]['media_url'][0]))
 			elif "url" in docs[i].keys():
 				tweet_data["tweet_url"].append(docs[i]['url'])
 

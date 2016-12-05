@@ -14,7 +14,7 @@ def converse(Query):
 	actions = {
 	    'send': send,    
 	}
-	tweet={"tweet_text":"","tweet_url":[],"media_url":""}
+	tweet={"tweet_text":"","tweet_url":[],"media_url":[]}
 	
 	client = Wit(access_token=access_token, actions=actions)
 	#Query=""

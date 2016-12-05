@@ -10,7 +10,7 @@ BASE = os.path.dirname(os.path.abspath(__file__))
 
 def process_tweets_from(string,data):
 	## Read out positive tweets from dna about demonetization
-	tweet_data={"tweet_text":"","tweet_url":[],"media_url":""}
+	tweet_data={"tweet_text":"","tweet_url":[],"media_url":[]}
 	screen_name=""
 	print string
 	if "tweets from" in string.lower() or "tweet from" in string.lower():
@@ -121,7 +121,7 @@ def process_tweets_from(string,data):
 		tweet_data["tweet_text"]+=(docs[max_ind[i]]['tweet_text'])
 		tweet_data["tweet_text"]+="\n"
 		if "media_url" in docs[max_ind[i]]:
-			tweet_data["media_url"]=str(docs[max_ind[i]]['media_url'][0])
+			tweet_data["media_url"].append(str(docs[max_ind[i]]['media_url'][0]))
 		elif "url" in docs[max_ind[i]].keys():
 			tweet_data["tweet_url"].append(docs[max_ind[i]]['url'])
 	if size==0:
