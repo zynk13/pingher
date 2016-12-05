@@ -14,7 +14,7 @@ def converse(Query):
 	actions = {
 	    'send': send,    
 	}
-	tweet={"tweet_text":"","tweet_url":[]}
+	tweet={"tweet_text":"","tweet_url":[],"media_url":""}
 	
 	client = Wit(access_token=access_token, actions=actions)
 	#Query=""
@@ -41,6 +41,12 @@ def converse(Query):
 		X=Query
 	if solr:
 		tweet=solrhandler.solrcall(X,data)
+	#print tweet['tweet_url'][0][0]
+	x=[]
+	for i in range(len(tweet['tweet_url'])):
+		x.append(tweet['tweet_url'][i][0])
+	tweet['tweet_url']=x
 	print tweet
 	return tweet
 
+converse("Show me image of Kejriwal")

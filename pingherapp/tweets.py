@@ -10,7 +10,7 @@ BASE = os.path.dirname(os.path.abspath(__file__))
 
 def process_tweets_from(string,data):
 	## Read out positive tweets from dna about demonetization
-	tweet_data={"tweet_text":"","tweet_url":[]}
+	tweet_data={"tweet_text":"","tweet_url":[],"media_url":""}
 	screen_name=""
 	print string
 	if "tweets from" in string.lower() or "tweet from" in string.lower():
@@ -28,15 +28,15 @@ def process_tweets_from(string,data):
 		#string=string.replace(" ","")
 	flag="neutral"
 	if "sentiment" in data['entities'].keys():
-			if "positive" in string:
-				flag="positive"
-				string=string.replace("positive","")
-			elif "negative" in string:
-				flag="negative"
-				string=string.replace("negative","")
-			elif "neutral" in string:
-				flag="neutral"
-				string=string.replace("neutral","")
+		if "positive" in string:
+			flag="positive"
+			string=string.replace("positive","")
+		elif "negative" in string:
+			flag="negative"
+			string=string.replace("negative","")
+		elif "neutral" in string:
+			flag="neutral"
+			string=string.replace("neutral","")
 	if "query_subject" in data['entities'].keys():
 		string=string.replace(data['entities']['query_subject'][0]['value'].lower(),"")
 		if "favourite" in data['entities']['query_subject'][0]['value'].lower():
@@ -44,16 +44,20 @@ def process_tweets_from(string,data):
 		if "retweet" in data['entities']['query_subject'][0]['value'].lower():
 			flag="retweet"
 		if "image" in data['entities']['query_subject'][0]['value'].lower():
-			flag="image"
+				if "image_subject" in data['entities'].keys():
+					string=data['entities']['image_subject'][0]['value'].lower()
+				elif "target_person" in data['entities'].keys():
+					string=data['entities']['target_person'][0]['value'].lower()
+				flag="image"
 	x=string.replace(" ","")
 	if x=="" and screen_name=="":
-		inurl="http://54.212.247.174:8983/solr/pingher/select?q=*:*&wt=json"
+		inurl="http://54.212.247.174:8983/solr/pingher/select?q=*:*&wt=json&rows=1000"
 	elif x=="" and screen_name!="":
-		inurl="http://54.212.247.174:8983/solr/pingher/select?q=screen_name:"+urllib2.quote(screen_name)+"&wt=json&rows=100"
+		inurl="http://54.212.247.174:8983/solr/pingher/select?q=screen_name:"+urllib2.quote(screen_name)+"&wt=json&rows=1000"
 	elif x!="" and screen_name=="":
-		inurl="http://54.212.247.174:8983/solr/pingher/select?q="+urllib2.quote(string)+"&wt=json&rows=100"
+		inurl="http://54.212.247.174:8983/solr/pingher/select?q="+urllib2.quote(string)+"&wt=json&rows=1000"
 	elif x!="" and screen_name!="":
-		inurl="http://54.212.247.174:8983/solr/pingher/select?q=("+urllib2.quote(string)+")AND(screen_name:"+urllib2.quote(screen_name)+")&wt=json&rows=100"
+		inurl="http://54.212.247.174:8983/solr/pingher/select?q=("+urllib2.quote(string)+")AND(screen_name:"+urllib2.quote(screen_name)+")&wt=json&rows=1000"
 	data = urllib2.urlopen(inurl)
 	print inurl
 	docs = json.load(data)['response']['docs']
@@ -64,7 +68,6 @@ def process_tweets_from(string,data):
 	tweet_list=[]
 	max_count=0.0
 	max_index=0
-	
 	if flag=="positive":
 		for i in range(len(docs)):
 			if docs[i]['sentiment']>pos_score and docs[i]['screen_name'] not in screen_name_list and docs[i]['tweet_text'] not in tweet_list:
@@ -101,23 +104,24 @@ def process_tweets_from(string,data):
 					max_count=docs[i]['retweet_count']
 		max_ind.append(max_index)
 	elif flag=="image":
-		max_ind.append(0)
-
-	max_list={}
+		for i in range(len(docs)):
+			if 'media_url' in docs[i].keys():
+				max_ind.append(i)
 	#for i in range(len(max_ind)):
 	#	if(flag=="positive"):
 	#		max_list[docs[i]['sentiment']]=i
 	#		print docs[i]['sentiment']
 	#print max_list
-	#print max_ind
 	size=5
+	if flag=="image":
+		size=1
 	if len(max_ind)<5:
 		size=len(max_ind)
 	for i in range(size):
 		tweet_data["tweet_text"]+=(docs[max_ind[i]]['tweet_text'])
 		tweet_data["tweet_text"]+="\n"
 		if "media_url" in docs[max_ind[i]]:
-			tweet_data["tweet_url"].append(docs[max_ind[i]]['media_url'])
+			tweet_data["media_url"]=str(docs[max_ind[i]]['media_url'][0])
 		elif "url" in docs[max_ind[i]].keys():
 			tweet_data["tweet_url"].append(docs[max_ind[i]]['url'])
 	if size==0:

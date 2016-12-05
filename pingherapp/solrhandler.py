@@ -7,7 +7,7 @@ def solrcall(string,data):
 	
 	#Getting SOLR Hosted URL and docs
 	screen_name=""
-	tweet_data={"tweet_text":"","tweet_url":[]}
+	tweet_data={"tweet_text":"","tweet_url":[],"media_url":""}
 	string=string.lower()
 	#print string
 	if "stat" in data['entities']:
@@ -17,20 +17,22 @@ def solrcall(string,data):
 		elif "target_person" in data['entities']:
 			string=data['entities']['target_person'][0]["value"];
 			inurl = "http://54.212.247.174:8983/solr/pingher/select?q="+urllib2.quote(data['entities']['target_person'][0]["value"])+"&wt=json&rows=1000"
-		
+		print inurl
 		data = urllib2.urlopen(inurl)
 		docs = json.load(data)['response']['docs']
 		pos=0.0
 		neg=0.0
 		neu=0.0
+		print len(docs)
 		for i in range(len(docs)):
-			if docs[i]['sentiment']>0.0:
+			#print docs[i]['sentiment'][0]
+			if docs[i]['sentiment'][0]>0.0:
 				pos+=1
-			elif docs[i]['sentiment']<0.0:
+			elif docs[i]['sentiment'][0]<0.0:
 				neg+=1
-			elif docs[i]['sentiment']==0.0:
+			elif docs[i]['sentiment'][0]==0.0:
 				neu+=1
-		tweet_data["tweet_text"]=str(pos*100/len(docs))+" percentage of general public are happy,"+str(neg*100/len(docs))+" percentage of general public are sad and "+str(neu*100/len(docs))+" percentage of general public are neutral about "+string
+		tweet_data["tweet_text"]=str(pos*100/len(docs))+" percentage of general public are happy ,"+str(neg*100/len(docs))+" percentage of general public are sad and "+str(neu*100/len(docs))+" percentage of general public are neutral about "+string
 
 
 	elif "show" in string:
@@ -41,11 +43,13 @@ def solrcall(string,data):
 		data = urllib2.urlopen(inurl)
 		docs = json.load(data)['response']['docs']
 		size=5
+		if "media_url" in docs[i]:
+			size=5
 		for i in range(size):
 			tweet_data["tweet_text"]+=(docs[i]['tweet_text'])
 			tweet_data["tweet_text"]+="\n"
 			if "media_url" in docs[i]:
-				tweet_data["tweet_url"].append(docs[i]['media_url'])
+				tweet_data["media_url"]=str(docs[i]['media_url'][0])
 			elif "url" in docs[i].keys():
 				tweet_data["tweet_url"].append(docs[i]['url'])
 
