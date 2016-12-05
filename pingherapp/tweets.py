@@ -114,7 +114,7 @@ def process_tweets_from(string,data):
 	#print max_list
 	size=5
 	if flag=="image":
-		size=3
+		size=4
 	if len(max_ind)<5:
 		size=len(max_ind)
 	for i in range(size):
