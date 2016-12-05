@@ -21,7 +21,7 @@ def converse(Query):
 	data=client.converse(1,Query)
 	X=""
 	for key in data['entities'].keys():
-	   	X=X+" "+(data['entities'][key][0]['value'])
+	   	X=X+" "+str(data['entities'][key][0]['value'])
 	mydict=json.load(open(os.path.join(BASE, "mydict.json")))
 	solr=True
 	for key_list in mydict.keys():
@@ -43,4 +43,3 @@ def converse(Query):
 		tweet=solrhandler.solrcall(X,data)
 	print tweet
 	return tweet
-

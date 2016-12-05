@@ -18,6 +18,7 @@ def solrcall(string,data):
 		data = urllib2.urlopen(inurl)
 		docs = json.load(data)['response']['docs']
 		tweet_data["tweet_text"] = (docs[0]['tweet_text'])
-		tweet_data["tweet_url"] = (docs[0]['url'])
+		if "url" in docs[0].keys():
+			tweet_data["tweet_url"] = (docs[0]['url'])
 	#print tweet_data
 	return tweet_data
