@@ -48,7 +48,7 @@ def converse(Query):
 	print tweet
 	return tweet
 
-#converse("what percentage of people are happy about kejriwal")
+#converse("What is your opinion on rahul gandhi")
 
 # whats your name
 # what can you do
