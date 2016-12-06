@@ -70,22 +70,25 @@ def process_tweets_from(string,data):
 	max_index=0
 	if flag=="positive":
 		for i in range(len(docs)):
-			if docs[i]['sentiment']>pos_score and docs[i]['screen_name'] not in screen_name_list and docs[i]['tweet_text'] not in tweet_list:
+			if docs[i]['sentiment'][0]>pos_score and docs[i]['screen_name'] not in screen_name_list and docs[i]['tweet_text'] not in tweet_list:
 				#score=docs[i]['sentiment']
+				#print docs[i]['sentiment'],docs[i]['tweet_id']
 				max_ind.append(i)
 				screen_name_list.append(docs[i]['screen_name'][0])
 				tweet_list.append(docs[i]['tweet_text'])
 	elif flag=="negative":
 		for i in range(len(docs)):
-			if docs[i]['sentiment']<neg_score and docs[i]['screen_name'] not in screen_name_list  and docs[i]['tweet_text'] not in tweet_list:
+			if docs[i]['sentiment'][0]<neg_score and docs[i]['screen_name'] not in screen_name_list  and docs[i]['tweet_text'] not in tweet_list:
 				#score=docs[i]['sentiment']
+				#print docs[i]['sentiment'],docs[i]['tweet_id']
 				max_ind.append(i)
 				screen_name_list.append(docs[i]['screen_name'][0])
 				tweet_list.append(docs[i]['tweet_text'])
 	elif flag=="neutral":
 		for i in range(len(docs)):
-			if docs[i]['sentiment']==0.0 and docs[i]['screen_name'] not in screen_name_list  and docs[i]['tweet_text'] not in tweet_list:
+			if docs[i]['sentiment'][0]==0.0 and docs[i]['screen_name'] not in screen_name_list  and docs[i]['tweet_text'] not in tweet_list:
 				#score=docs[i]['sentiment']
+				#print docs[i]['sentiment'],docs[i]['tweet_id']
 				max_ind.append(i)
 				screen_name_list.append(docs[i]['screen_name'][0])
 				tweet_list.append(docs[i]['tweet_text'])

@@ -43,7 +43,7 @@ def solrcall(string,data):
 		data = urllib2.urlopen(inurl)
 		docs = json.load(data)['response']['docs']
 		size=5
-		if "media_url" in docs[i]:
+		if "image" in string:
 			size=4
 		for i in range(size):
 			tweet_data["tweet_text"]+=(docs[i]['tweet_text'])

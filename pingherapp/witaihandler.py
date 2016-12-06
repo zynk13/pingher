@@ -3,7 +3,6 @@ from wit import Wit
 import json
 import os.path
 from random import randint
-
 BASE = os.path.dirname(os.path.abspath(__file__))
 def converse(Query):
 	access_token = "HUYFSZATE2FRGLETGVWWTCHNSVTXBKDC" 
@@ -49,3 +48,12 @@ def converse(Query):
 	print tweet
 	return tweet
 
+#converse("show me positive tweets on demonetization")
+
+# whats your name
+# what can you do
+# What is your opinion on demonetization
+# Tell me a joke
+# Show me the most positive/neg/neut tweets <from dna> on demonetization
+# Show me the most retweeted/favourited tweet <from dna> on demonetization
+# Who implemented demonetization
