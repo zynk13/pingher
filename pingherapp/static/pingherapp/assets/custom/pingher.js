@@ -57,7 +57,7 @@ $(window).load(function() {
                                 });
 	      },
               MakeAjaxCall : function(){
-                                    var d = new Date();
+                                      var d = new Date();
                     		      var question=$("input[name='q']").val();
                     		      var questionUI="<li class='in'><img class='avatar' alt='' src='/static/pingherapp/assets/layouts/layout/img/avatar1.jpg' /><div class='message'><span class='arrow'> </span><a href='javascript:;' class='name'> You </a><span class='datetime'> at "+d.getHours()+":"+d.getMinutes()+" </span><span class='body'>"+question+"</span></div></li>"
                        		      var parentList=$("ul.chats");
