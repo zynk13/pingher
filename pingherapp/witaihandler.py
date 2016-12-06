@@ -48,7 +48,7 @@ def converse(Query):
 	print tweet
 	return tweet
 
-#converse("show me positive tweets on demonetization")
+#converse("what percentage of people are happy about kejriwal")
 
 # whats your name
 # what can you do

@@ -63,11 +63,11 @@ def process_tweets_from(string,data):
 	docs = json.load(data)['response']['docs']
 	max_ind=[];
 	pos_score=0.5;
-	neg_score=-0.5;
+	neg_score=-0.3;
 	screen_name_list=[]
 	tweet_list=[]
 	max_count=0.0
-	max_index=0
+	max_index=-1
 	if flag=="positive":
 		for i in range(len(docs)):
 			if docs[i]['sentiment'][0]>pos_score and docs[i]['screen_name'] not in screen_name_list and docs[i]['tweet_text'] not in tweet_list:
@@ -98,14 +98,18 @@ def process_tweets_from(string,data):
 				if docs[i]['favorite_count']>max_count:
 					max_index=i
 					max_count=docs[i]['favorite_count']
-		max_ind.append(max_index)
+		#print docs[max_index]['tweet_id']
+		if max_index!=-1:
+			max_ind.append(max_index)
 	elif flag=="retweet":
 		for i in range(len(docs)):
 			if 'retweet_count' in docs[i].keys():
 				if docs[i]['retweet_count']>max_count:
 					max_index=i
 					max_count=docs[i]['retweet_count']
-		max_ind.append(max_index)
+		#print docs[max_index]['tweet_id']
+		if max_index!=-1:
+			max_ind.append(max_index)
 	elif flag=="image":
 		for i in range(len(docs)):
 			if 'media_url' in docs[i].keys():
@@ -120,6 +124,7 @@ def process_tweets_from(string,data):
 		size=4
 	if len(max_ind)<5:
 		size=len(max_ind)
+	print docs
 	for i in range(size):
 		tweet_data["tweet_text"]+=(docs[max_ind[i]]['tweet_text'])
 		tweet_data["tweet_text"]+="\n"
