@@ -30,7 +30,7 @@ def converse(Query):
 				flag=False
 		if flag:
 			if "JOKE" in key_list:
-				x=randint(1,5)
+				x=randint(1,4)
 				tweet['tweet_text']=mydict[key_list[:-1]+str(x)]
 			else:
 				tweet['tweet_text']=mydict[key_list]
