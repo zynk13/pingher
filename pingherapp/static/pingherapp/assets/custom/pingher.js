@@ -80,7 +80,18 @@ $(window).load(function() {
                                             if(urlUI!=""){
                                                 urlUI="&nbsp;URL(s) - "+urlUI
                                             }
-                                            var answerUI="<li class='out'><img class='avatar' alt='' src='/static/pingherapp/assets/layouts/layout/img/avatar2.png' /><div class='message'><span class='arrow'> </span><a href='javascript:;' class='name'> Her </a><span class='datetime'> at "+d.getHours()+":"+d.getMinutes()+"</span><span class='body'>"+result.tweet_text+urlUI+"</span></div></li>"
+                                            var imgUI="";
+                                            for(var i=0;i<result.media_url.length;i++){
+                                                console.log(result.media_url[i]);
+                                                var imgTemp="<div class='tweetImgDiv'><img class='tweetImg' src='"+result.media_url[i]+"' /></div>";
+                                                imgUI+=imgTemp;
+                                            }
+                                            
+                                            //if(result.media_url!=""){
+                                            //    imgUI="<div class='tweetImgDiv'><img class='tweetImg' src='"+result.media_url+"' /></div>";
+                                            //}
+                                            
+                                            var answerUI="<li class='out'><img class='avatar' alt='' src='/static/pingherapp/assets/layouts/layout/img/avatar2.png' /><div class='message'><span class='arrow'> </span><a href='javascript:;' class='name'> Her </a><span class='datetime'> at "+d.getHours()+":"+d.getMinutes()+"</span><span class='body'>"+result.tweet_text+urlUI+"</span></div>"+imgUI+"</li>"
                                             parentList.append(answerUI);
                                             var container = $(".scroller");
                                             container.slimScroll({

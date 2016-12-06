@@ -29,3 +29,27 @@ body {
 .chats li.out .avatar {
     margin-right: 10px;
 }
+.tweetImg{
+    width: 70%;
+}
+.tweetImgDiv{
+    text-align: center;
+    margin-top: 15px;
+}
+.page-content .page-fixed-main-content {
+    padding: 20px 20px 0 20px;
+}
+
+.copyright-v2 {
+    
+    padding: 0 0 10px 0;
+    background : whitesmoke;
+}
+
+.page-content.page-content-popup {
+    background: whitesmoke;
+}
+
+.portlet {
+    margin-bottom: 112px;
+}
