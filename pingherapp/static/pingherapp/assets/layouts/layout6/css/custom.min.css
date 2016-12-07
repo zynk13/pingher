@@ -53,3 +53,6 @@ body {
 .portlet {
     margin-bottom: 112px;
 }
+ul.feeds li{
+    cursor:pointer;
+}
