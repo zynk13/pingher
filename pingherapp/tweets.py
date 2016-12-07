@@ -124,7 +124,7 @@ def process_tweets_from(string,data):
 		size=4
 	if len(max_ind)<5:
 		size=len(max_ind)
-	print docs
+	#print docs
 	for i in range(size):
 		tweet_data["tweet_text"]+=(docs[max_ind[i]]['tweet_text'])
 		tweet_data["tweet_text"]+="\n"
