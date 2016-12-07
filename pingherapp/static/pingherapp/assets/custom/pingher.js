@@ -15,6 +15,15 @@ $(window).load(function() {
     };
     window.speechSynthesis.speak(utterance);
     PingherUtil.DetectEnter();
+    // Attaching the onlclick listeners to the sample questions
+    
+    $( "ul.feeds li .cont" ).click(function() {
+            console.log(this);
+            var qToAsk=this.getElementsByClassName("desc")[0].innerText;
+            $("input[name='q']")[0].value=qToAsk;
+            PingherUtil.MakeAjaxCall();
+            
+});
 });
 
 
