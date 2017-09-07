@@ -13,10 +13,10 @@ def solrcall(string,data):
 	if "stat" in data['entities']:
 		if "demonetization" in data['entities']:
 			string=data['entities']['demonetization'][0]["value"];
-			inurl = "http://54.212.247.174:8983/solr/pingher/select?q="+urllib2.quote(data['entities']['demonetization'][0]["value"])+"&wt=json&rows=1000"
+			inurl = "http://54.149.161.71:8983/solr/pingher/select?q="+urllib2.quote(data['entities']['demonetization'][0]["value"])+"&wt=json&rows=1000"
 		elif "target_person" in data['entities']:
 			string=data['entities']['target_person'][0]["value"];
-			inurl = "http://54.212.247.174:8983/solr/pingher/select?q="+urllib2.quote(data['entities']['target_person'][0]["value"])+"&wt=json&rows=1000"
+			inurl = "http://54.149.161.71:8983/solr/pingher/select?q="+urllib2.quote(data['entities']['target_person'][0]["value"])+"&wt=json&rows=1000"
 		print inurl
 		data = urllib2.urlopen(inurl)
 		docs = json.load(data)['response']['docs']
@@ -39,7 +39,7 @@ def solrcall(string,data):
 		tweet_data=tweets.process_tweets_from(string,data)
 
 	else:
-		inurl = "http://54.212.247.174:8983/solr/pingher/select?q="+urllib2.quote(string)+"&wt=json&rows=100"
+		inurl = "http://54.149.161.71:8983/solr/pingher/select?q="+urllib2.quote(string)+"&wt=json&rows=100"
 		data = urllib2.urlopen(inurl)
 		docs = json.load(data)['response']['docs']
 		size=5

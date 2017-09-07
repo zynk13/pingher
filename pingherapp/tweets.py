@@ -51,13 +51,13 @@ def process_tweets_from(string,data):
 				flag="image"
 	x=string.replace(" ","")
 	if x=="" and screen_name=="":
-		inurl="http://54.212.247.174:8983/solr/pingher/select?q=*:*&wt=json&rows=1000"
+		inurl="http://54.149.161.71:8983/solr/pingher/select?q=*:*&wt=json&rows=1000"
 	elif x=="" and screen_name!="":
-		inurl="http://54.212.247.174:8983/solr/pingher/select?q=screen_name:"+urllib2.quote(screen_name)+"&wt=json&rows=1000"
+		inurl="http://54.149.161.71:8983/solr/pingher/select?q=screen_name:"+urllib2.quote(screen_name)+"&wt=json&rows=1000"
 	elif x!="" and screen_name=="":
-		inurl="http://54.212.247.174:8983/solr/pingher/select?q="+urllib2.quote(string)+"&wt=json&rows=1000"
+		inurl="http://54.149.161.71:8983/solr/pingher/select?q="+urllib2.quote(string)+"&wt=json&rows=1000"
 	elif x!="" and screen_name!="":
-		inurl="http://54.212.247.174:8983/solr/pingher/select?q=("+urllib2.quote(string)+")AND(screen_name:"+urllib2.quote(screen_name)+")&wt=json&rows=1000"
+		inurl="http://54.149.161.71:8983/solr/pingher/select?q=("+urllib2.quote(string)+")AND(screen_name:"+urllib2.quote(screen_name)+")&wt=json&rows=1000"
 	data = urllib2.urlopen(inurl)
 	print inurl
 	docs = json.load(data)['response']['docs']
