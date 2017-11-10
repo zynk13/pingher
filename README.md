@@ -15,3 +15,6 @@ http://pingher.com
 - jQuery
 - CSS3
 - Apache SOLR
+
+## High Level Architecture
+![High Level Architecture](/Architecture.png?raw=true "High Level Architecture")
