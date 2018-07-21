@@ -1,5 +1,5 @@
 # pingher
-Pingher is an AI bot that can answer questions on Demonetization, an initiative by the Indian Government to eradicate Blackmoney from the economy. It uses wit.ai along with an NLP Api called NLTK to support Question and Answers on tweets indexed on SOLR.
+Pingher is an AI bot that can answer questions using content from tweets. It uses wit.ai along with an NLP Api called NLTK to support Question and Answering on tweets indexed on SOLR.
 ## Website 
 http://pingher.com
 
@@ -7,13 +7,9 @@ http://pingher.com
 [![Pingher](https://img.youtube.com/vi/JsR5HBdznmw/0.jpg)](https://www.youtube.com/watch?v=JsR5HBdznmw)
 
 ## Tech Stack
-- Natural Language Pre-processing of collected tweets in JSON using NLTK (python)
-- Django(A python web framework)
+- Natural Language Processing of collected tweets in JSON using NLTK (python)
+- Machine learning using Wit.ai
 - Google Synthetic Voice Generation
-- Wit.ai
-- HTML5
-- jQuery
-- CSS3
 - Apache SOLR
 
 ## High Level Architecture
