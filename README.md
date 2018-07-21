@@ -1,5 +1,6 @@
 # pingher
-Pingher is an AI bot that can answer questions using content from tweets. It uses wit.ai along with an NLP Api called NLTK to support Question and Answering on tweets indexed on SOLR.
+Pingher is an AI chat-bot that can answer questions by retrieving information from tweets. It uses Machine learning to identify keywords from questions (using wit.ai), Natural Language processing techniques to make answering questions easier (NLTK, python) and Apache's SOLR for indexing tweets.
+
 ## Website 
 http://pingher.com
 
